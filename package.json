@@ -1,9 +1,10 @@
 {
-  "name": "typeatm",
+  "name": "abmoiz-atm-machine",
   "version": "1.0.0",
   "description": "ATM with typescript and inquirer",
   "main": "index.js",
   "type": "module",
+  "bin": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
