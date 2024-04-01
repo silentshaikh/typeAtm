@@ -9,6 +9,7 @@ let atmAnswer = await inquirer.prompt([
     choices: [2345, 5643, 8949, 4587],
   },
 ]);
+// Add Each Code Amount 
 if (atmAnswer.pinCode === 2345) {
   ourBalance += 10000;
 } else if (atmAnswer.pinCode === 5643) {
@@ -25,13 +26,32 @@ if (atmAnswer.pinCode) {
       name: "operations",
       message: "Please select only one option",
       type: "list",
-      choices: ["withdraw", "checkbalance"],
+      choices: ["withdraw","fastcash", "checkbalance"],
+    },
+]);
+// With Draw Amount
+if (atmOperations.operations === "withdraw") {
+  let atmWithdraw = await inquirer.prompt([
+    {
+      name: "withdraw",
+      message: "Please Enter Your Amount",
+      type: "number",
     },
   ]);
-  if (atmOperations.operations === "withdraw") {
+  if (atmWithdraw.withdraw > ourBalance) {
+    console.log(
+      `Sir, Your Balance only is ${ourBalance}, so you can not withdraw ${atmWithdraw.withdraw}`
+    );
+  } else {
+    ourBalance -= atmWithdraw.withdraw;
+    console.log(`Your Remaining Balance is : ${ourBalance}`);
+  }
+}
+// Fast Cash Amount
+  else if (atmOperations.operations === "fastcash") {
     let atmWithdraw = await inquirer.prompt([
       {
-        name: "withdraw",
+        name: "fastcash",
         message: "Please select any one",
         type: "list",
         choices: [
@@ -39,15 +59,17 @@ if (atmAnswer.pinCode) {
         ],
       },
     ]);
-    if (atmWithdraw.withdraw > ourBalance) {
+    if (atmWithdraw.fastcash > ourBalance) {
       console.log(
-        `Sir, Your Balance only is ${ourBalance}, so you can not withdraw ${atmWithdraw.withdraw}`
+        `Sir, Your Balance only is ${ourBalance}, so you can not withdraw ${atmWithdraw.fastcash}`
       );
     } else {
-      ourBalance -= atmWithdraw.withdraw;
+      ourBalance -= atmWithdraw.fastcash;
       console.log(`Your Remaining Balance is : ${ourBalance}`);
     }
-  } else if (atmOperations.operations === "checkbalance") {
+  } 
+  // Check Amount
+  else if (atmOperations.operations === "checkbalance") {
     console.log(`Your Balance is : ${ourBalance}`);
   }
 } else {

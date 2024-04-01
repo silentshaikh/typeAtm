@@ -9,6 +9,7 @@ let atmAnswer = await inquirer.prompt([
         choices: [2345, 5643, 8949, 4587],
     },
 ]);
+// Add Each Code Amount 
 if (atmAnswer.pinCode === 2345) {
     ourBalance += 10000;
 }
@@ -28,18 +29,16 @@ if (atmAnswer.pinCode) {
             name: "operations",
             message: "Please select only one option",
             type: "list",
-            choices: ["withdraw", "checkbalance"],
+            choices: ["withdraw", "fastcash", "checkbalance"],
         },
     ]);
+    // With Draw Amount
     if (atmOperations.operations === "withdraw") {
         let atmWithdraw = await inquirer.prompt([
             {
                 name: "withdraw",
-                message: "Please select any one",
-                type: "list",
-                choices: [
-                    500, 1000, 1500, 5000, 10000, 15000, 20000, 25000, 32000, 40000,
-                ],
+                message: "Please Enter Your Amount",
+                type: "number",
             },
         ]);
         if (atmWithdraw.withdraw > ourBalance) {
@@ -50,6 +49,27 @@ if (atmAnswer.pinCode) {
             console.log(`Your Remaining Balance is : ${ourBalance}`);
         }
     }
+    // Fast Cash Amount
+    else if (atmOperations.operations === "fastcash") {
+        let atmWithdraw = await inquirer.prompt([
+            {
+                name: "fastcash",
+                message: "Please select any one",
+                type: "list",
+                choices: [
+                    500, 1000, 1500, 5000, 10000, 15000, 20000, 25000, 32000, 40000,
+                ],
+            },
+        ]);
+        if (atmWithdraw.fastcash > ourBalance) {
+            console.log(`Sir, Your Balance only is ${ourBalance}, so you can not withdraw ${atmWithdraw.fastcash}`);
+        }
+        else {
+            ourBalance -= atmWithdraw.fastcash;
+            console.log(`Your Remaining Balance is : ${ourBalance}`);
+        }
+    }
+    // Check Amount
     else if (atmOperations.operations === "checkbalance") {
         console.log(`Your Balance is : ${ourBalance}`);
     }
